@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './cart-table.css';
 import {connect} from 'react-redux';
 import {
@@ -7,7 +7,7 @@ import {
     itemsRemovedFromCart,
     clearCart
 } from '../../actions';
-import {Table} from 'react-bootstrap'
+import {Table, Modal, Button} from 'react-bootstrap'
 
 const mapStateToProps = ({cart: {cartItems, totalPrice}}) => {
     return {cartItems, totalPrice}
@@ -20,7 +20,7 @@ const mapDispatchToProps = {
     onCartCleared: clearCart
 };
 
-const CartTable = ({cartItems, totalPrice, onDecrease, onIncrease, onDelete, onCartCleared, showAlert}) => {
+const CartTable = ({cartItems, totalPrice, onDecrease, onIncrease, onDelete, onCartCleared}) => {
     const renderRow = (cartItem, idx) => {
         const { id, name, count, total } = cartItem;
 
@@ -50,12 +50,10 @@ const CartTable = ({cartItems, totalPrice, onDecrease, onIncrease, onDelete, onC
         )
     };
 
-    const checkout = () => {
-        const userChoice = window.confirm(`Are you sure you want to buy these items?`);
-        if (!userChoice) return;
-        onCartCleared();
+    const [show, setShow] = useState(false);
 
-    };
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     return (
         <div className="cart-table mt-5">
@@ -79,12 +77,31 @@ const CartTable = ({cartItems, totalPrice, onDecrease, onIncrease, onDelete, onC
                 Total Price: ${totalPrice}
             </div>
 
-            <button
-                onClick={checkout}
-                className="btn btn-success mt-4 float-right"
+            <Button
+                variant="success"
+                onClick={handleShow}
+                className="mt-4 float-right"
             >
                 Checkout
-            </button>
+            </Button>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Checkout</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are you sure you want to buy these items?</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={() => {
+                        onCartCleared();
+                        handleClose();
+                    }}>
+                        Buy
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     )
 };
