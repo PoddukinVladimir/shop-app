@@ -1,0 +1,44 @@
+.app-header {
+    height: 50px;
+    background: black;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.app-header-container {
+    max-width: 840px;
+    padding: 8px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-logo {
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    align-self: flex-end;
+}
+
+.app-logo a:hover {
+    text-decoration: none;
+}
+
+.app-nav a {
+    color: white;
+    padding: 10px;
+}
+
+.app-nav i {
+    padding-right: 5px;
+}
+
+.app-nav a:hover {
+    text-decoration: none;
+    color: #d6d6d6;
+}

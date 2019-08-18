@@ -1,0 +1,8 @@
+.total {
+    text-align: right;
+    font-weight: bold;
+}
+
+.cart-table button {
+    margin-right: 5px;
+}
