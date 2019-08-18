@@ -34,8 +34,8 @@ const ProductForm = ({addProduct, showAlert}) => {
                 if (!values.description) {
                     errors.description = requiredMsg;
                 }
-                if (!values.price) {
-                    errors.price = requiredMsg;
+                if (!values.price || values.price < 0) {
+                    errors.price = requiredMsg + ` should be greater than 0`;
                 }
                 return errors;
             }}
