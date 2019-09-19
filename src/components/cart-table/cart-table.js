@@ -34,15 +34,15 @@ const CartTable = ({cartItems, totalPrice, onDecrease, onIncrease, onDelete, onC
                     <div className="pull-right">
                         <button onClick={() => onDecrease(id)}
                                 className="btn btn-outline-warning btn-sm">
-                            <i className="fa fa-minus-circle"></i>
+                            <i className="fa fa-minus-circle" />
                         </button>
                         <button onClick={() => onIncrease(id)}
                                 className="btn btn-outline-success btn-sm">
-                            <i className="fa fa-plus-circle"></i>
+                            <i className="fa fa-plus-circle" />
                         </button>
                         <button onClick={() => onDelete(id)}
                                 className="btn btn-outline-danger btn-sm">
-                            <i className="fa fa-trash"></i>
+                            <i className="fa fa-trash" />
                         </button>
                     </div>
                 </td>

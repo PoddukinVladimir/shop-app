@@ -1,16 +1,23 @@
+import {
+    ITEM_ADDED_TO_CART,
+    ITEM_REMOVED_FROM_CART,
+    ITEMS_REMOVED_FROM_CART,
+    CLEAR_CART
+} from '../actions/action-types';
+
 const updateCartItems = (cartItems, item, idx) => {
     if (item.count === 0) {
-        return [
-            ...cartItems.slice(0, idx),
-            ...cartItems.slice(idx + 1)
-        ];
+        // remove item
+        return cartItems.filter((cItem) => cItem.id !== item.id);
     }
     if (idx === -1) {
+        // add new item
         return [
             ...cartItems,
             item
         ]
     } else {
+        // update existing collection
         return [
             ...cartItems.slice(0, idx),
             item,
@@ -54,32 +61,32 @@ const updateOrder = (state, productId, quantity) => {
     };
 };
 
-export const updateCart = (state, action) => {
-    if (state === undefined) {
-        return {
-            cartItems: [
-                {
-                    id: 1,
-                    name: `Secrets Of The JavaScript Ninja`,
-                    count: 1,
-                    price: 45,
-                    total: 45
-                }
-            ],
-            totalPrice: 45,
-            totalCount: 1,
-        }
+const defaultState = {
+    cart: {
+        cartItems: [
+            {
+                id: 1,
+                name: `Secrets Of The JavaScript Ninja`,
+                count: 1,
+                price: 45,
+                total: 45
+            }
+        ],
+        totalPrice: 45,
+        totalCount: 1
     }
+};
 
+export const updateCart = (state = defaultState, action) => {
     switch(action.type) {
-        case `ITEM_ADDED_TO_CART`:
+        case ITEM_ADDED_TO_CART:
             return updateOrder(state, action.payload, 1);
-        case `ITEM_REMOVED_FROM_CART`:
+        case ITEM_REMOVED_FROM_CART:
             return updateOrder(state, action.payload, -1);
-        case `ITEMS_REMOVED_FROM_CART`:
+        case ITEMS_REMOVED_FROM_CART:
             const item = state.cart.cartItems.find(({id}) => id === action.payload);
             return updateOrder(state, action.payload, -item.count);
-        case `CLEAR_CART`:
+        case CLEAR_CART:
             return {
                 ...state.cart,
                 cartItems: [],
